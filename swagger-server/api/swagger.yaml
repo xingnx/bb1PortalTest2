@@ -1,0 +1,114 @@
+---
+swagger: "2.0"
+info:
+  description: "\nBB1 Portal POC Test API\n"
+  version: "v1"
+  title: "BB1 Portal Test"
+host: "localhost:8081"
+basePath: "/bb1portal/test"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /operation/client-app:
+    post:
+      description: "Operation for testing client application credentials grant type"
+      operationId: "operationClient_appPOST"
+      parameters:
+      - name: "input-string"
+        in: "header"
+        description: "any string"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Response"
+      security:
+      - key: []
+      - client-app:
+        - "create"
+        - "update"
+        - "read"
+      x-swagger-router-controller: "Default"
+    options:
+      operationId: "operationClient_appOPTIONS"
+      parameters: []
+      responses:
+        default:
+          description: "CORS headers for all operations"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+              default: "*"
+            Access-Control-Allow-Headers:
+              type: "string"
+              default: "X-UA-Compatible, X-XSS-Protection"
+      x-swagger-router-controller: "Default"
+  /operation/resource-owner:
+    post:
+      description: "Operation for testing resource owner credentials grant type"
+      operationId: "operationResource_ownerPOST"
+      parameters:
+      - name: "input-string"
+        in: "header"
+        description: "any string"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Response"
+      security:
+      - key: []
+      - resource-owner:
+        - "create"
+        - "update"
+        - "read"
+      x-swagger-router-controller: "Default"
+    options:
+      operationId: "operationResource_ownerOPTIONS"
+      parameters: []
+      responses:
+        default:
+          description: "CORS headers for all operations"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+              default: "*"
+            Access-Control-Allow-Headers:
+              type: "string"
+              default: "X-UA-Compatible, X-XSS-Protection"
+      x-swagger-router-controller: "Default"
+securityDefinitions:
+  resource-owner:
+    type: "oauth2"
+    tokenUrl: "http://api.axa.com/idm/maam"
+    flow: "password"
+    scopes:
+      create: "create"
+      update: "modify"
+      read: "read"
+  client-app:
+    type: "oauth2"
+    tokenUrl: "http://api.axa.com/idm/maam"
+    flow: "application"
+    scopes:
+      create: "create"
+      update: "modify"
+      read: "read"
+  key:
+    type: "apiKey"
+    name: "x-axa-apiKey"
+    in: "header"
+definitions:
+  Response:
+    type: "object"
+    properties:
+      responseStr:
+        type: "string"

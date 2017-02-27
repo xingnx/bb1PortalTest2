@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Sample API Page</title>
+		<link rel="shortcut icon" href="img/favicon.ico">
+		<!-- Bootstrap core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<!-- AXA Standards template CSS-->
+		<link href="css/general.css" rel="stylesheet" type="text/css">
+		<link href="css/styles.css" rel="stylesheet"/>
+		<!-- AXA Standards CSS-->
+		<link href="css/standard.css" rel="stylesheet">
+		<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<!-- Application javascript -->
+		<script src="js/actions.js"></script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div class="standards">
+				<div data-role="header" data-position="fixed" class="library-header" role="banner">
+					<div class="row mainHeader innerHeader">
+						<div class="col-xs-12 col-sm-3 logo"><a href="#"><img src="img/logo-AXA.png" alt="AXA"></a></div>
+						<div class="col-xs-12 col-sm-9 text">
+							<h3>Sample API Page</h3>
+						</div>
+					</div>
+				</div>
+				<div class="row innerContent">
+					<div class="col-xs-12">
+						<h1 class="stdHeader">BB1 Portal Test</h1>
+					</div>
+					<div class="col-xs-12">
+						<h3 class="stdHeader">Login</h3>
+						<section class="std" style="overflow:hidden">
+							<div class="col-xs-12 col-sm-6">
+								<fieldset class="form-group">
+									<div class="sm-label">Username:</div>
+									<input class="form-control" id="username" placeholder="Your email" value="lanxi.xing@axa.com.hk">
+								</fieldset>
+								<fieldset class="form-group">
+									<div class="sm-label">Password:</div>
+									<input class="form-control" id="password" placeholder="Your password" value="Anonblacklisted1!">
+								</fieldset>
+								<button class="btn btn-blue btn-spacefix" type="submit" data-role="none" onclick="UserLogin()">Login</button>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<fieldset class="form-group">
+									<div class="sm-label">Your access token:</div>
+									<div class="input-group">
+										<input  id="accessToken" type="text" class="form-control" placeholder="Access token" disabled>
+										<span class="input-group-btn">
+											<button id="copyAccessToken" class="btn btn-blue btn-spacefix" type="submit" data-role="none" style="margin-bottom: 0" onclick="copyToClipboard('accessToken')">Copy</button>
+										</span>
+									</div>
+								</fieldset>
+								<fieldset class="form-group">
+									<div class="sm-label">Your refresh token:</div>
+									<div class="input-group">
+										<input  id="refreshToken" type="text" class="form-control" placeholder="Refresh token" disabled>
+										<span class="input-group-btn">
+											<button id="copyRefreshToken" class="btn btn-blue btn-spacefix" type="submit" data-role="none" style="margin-bottom: 0" onclick="copyToClipboard('refreshToken')">Copy</button>
+										</span>
+									</div>
+								</fieldset>
+								<button class="btn btn-blue btn-spacefix" type="submit" data-role="none" onclick="RefreshAction()">Refresh</button>
+								<div class="res-time-container">
+									<div id="resTime" class="sm-label pull-right"></div>
+									<div class="sm-label pull-right">Time:</div>
+								</div>
+
+							</div>
+						</section>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<h3 class="stdHeader">Input</h3>
+						<section class="std" style="height:300px">
+							<div class="sm-label">Select method:</div>
+							<div class="table-form-select select-fix">
+								<select id="methods">
+									<option value="client-app">/operation/client-app</option>
+									<option value="resource-owner">/operation/resource-owner</option>
+								</select>
+							</div>      
+							<fieldset class="form-group">
+								<div class="sm-label">Your input:</div>
+								<input class="form-control" id="input-field" placeholder="Type something">
+							</fieldset>
+							<fieldset class="form-group">
+								<div class="sm-label">Your token:</div>
+								<input class="form-control" id="input-token" placeholder="Paste your token here">
+							</fieldset>
+							<br>
+							<button class="btn btn-blue btn-spacefix" type="submit" data-role="none" onclick="UserAction()">Submit</button><br>
+						</section>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<h3 class="stdHeader">Output</h3>
+						<section class="std" style="height:300px">
+							<fieldset class="form-group">
+								<div class="sm-label">Output:</div>
+								<input class="form-control" id="output" placeholder="Given output" disabled=''>
+							</fieldset>
+							<fieldset class="form-group">
+								<div class="sm-label">Method:</div>
+								<input class="form-control" id="method" placeholder="Output method" disabled=''>
+							</fieldset>
+							<fieldset class="form-group">
+								<div class="sm-label">Timestamp:</div>
+								<input class="form-control" id="time" placeholder="Output time" disabled=''>
+							</fieldset>
+							<fieldset class="form-group">
+								<div class="sm-label">Token:</div>
+								<input class="form-control" id="res-token" placeholder="Requested Token" disabled=''>
+							</fieldset>
+						</section>
+						<br>
+					</div>
+					<div class="col-xs-12">
+						<h3 class="stdHeader">Logout</h3>
+						<section class="std" style="overflow:hidden">
+							<div class="col-xs-12">
+								<fieldset class="form-group">
+									<div class="sm-label">Your token:</div>
+									<input class="form-control" id="revokeToken" placeholder="Your access or refresh token">
+								</fieldset>
+								<!-- This function is currently not available as /revoke from MAAM does not contain an OPTION resource for enabling Access-Control-Allow-Origin -->
+								<button class="btn btn-blue btn-spacefix" type="submit" data-role="none" onclick="RevokeAction()" disabled>Revoke</button>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

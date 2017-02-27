@@ -1,0 +1,54 @@
+This provides a general POC on the BB1 Portal Call.
+Additional information how to call MAAM: https://portal.paas.intraxa/confluence/display/OAUTH/Resource+Owner+Password+Credentials
+
+********************************  IMPORTANT  ********************************
+1. You have to enable CORS in your browser in order to make a Access-Control-Allow-Origin call,
+   as both middleware and swagger apis' are running on local
+   For Chrome - many plugins are available to switch CORS on and off
+2. You need Node.JS to run local middleware and swagger servers
+3. You probably also need some server(tomcat) to host your html instead of running it from your local path
+*****************************************************************************
+
+---------------           ---------------
+|			  |---------->|				|
+|  Front End  |   token   |     MAAM	|
+|             |<----------|				|
+---------------           ---------------
+      ^ |
+      | |
+      | |
+      | v
+---------------           ---------------
+|			  |---------->|				|
+|  Middleware |           |   Swagger	|
+|             |<----------|				|
+---------------           ---------------
+
+The HTML will call MAAM with pre-configured client_id, secret, username and password. MAAM returns a JSON containing access and refresh token.
+The HTML will then be able to call the middleware api with given method, input and access token.
+Middleware api will further process the parameters to Swagger api - which it will return the given input, token, method type and timestamp.
+
+Instructions:
+cd to /swagger-server type:
+node index.js
+
+cd to /api type:
+node server.js
+
+navigate to html folder and run your index.html
+
+-------------------------------------------------------------
+Testing /revoke:
+This function is currently not available on browser as /revoke from MAAM does not contain an OPTION resource. You will get a 500:Internal Server Error. MAAM might not have Access-Control-Allow-Origin allowed
+You will be able to test the /revoke function by calling MAAM on Postman/SoapUI/etc.
+
+Here's a sample header:
+
+POST /dev/revoke HTTP/1.1
+Host: maam-dev.axa.com
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic YWRkMmRmZDEtNDVjZS00NmVhLWJiMmEtYTI5N2E2OGI5OTg5OjYyNDZlOTc2LWVlZjctNDM3OC1iZWI4LWY1MDc2ZDhlM2EyNg==
+Cache-Control: no-cache
+Postman-Token: 375da12c-ad65-3a22-d00f-0e91e7d5f0c5
+
+token=yourRefreshToken
